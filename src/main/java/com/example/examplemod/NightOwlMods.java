@@ -23,20 +23,20 @@ public class NightOwlMods {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        openMenuKey = new KeyBinding("Open NightOwl Menu", Keyboard.KEY_RSHIFT, "NightOwl's Mods");
+        openMenuKey = new KeyBinding("Open Client Menu", Keyboard.KEY_RSHIFT, "NightOwl Client");
         ClientRegistry.registerKeyBinding(openMenuKey);
 
-        // Register all our modules
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new Fullbright());
-        MinecraftForge.EVENT_BUS.register(new NoDamageTilt());
-        MinecraftForge.EVENT_BUS.register(new ClearChat());
+        MinecraftForge.EVENT_BUS.register(new ModuleLighting());
+        MinecraftForge.EVENT_BUS.register(new ModuleDamageTilt());
+        MinecraftForge.EVENT_BUS.register(new ModuleChat());
+        MinecraftForge.EVENT_BUS.register(new ModuleArmorHUD());
     }
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (openMenuKey.isPressed()) {
-            Minecraft.getMinecraft().displayGuiScreen(new LunarGui());
+            Minecraft.getMinecraft().displayGuiScreen(new GuiClientMenu());
         }
     }
 }
