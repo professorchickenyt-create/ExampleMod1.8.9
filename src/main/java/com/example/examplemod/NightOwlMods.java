@@ -23,34 +23,20 @@ public class NightOwlMods {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        openMenuKey = new KeyBinding("Open main menu", Keyboard.KEY_RSHIFT, "NightOwl's Mods");
+        openMenuKey = new KeyBinding("Open NightOwl Menu", Keyboard.KEY_RSHIFT, "NightOwl's Mods");
         ClientRegistry.registerKeyBinding(openMenuKey);
 
+        // Register all our modules
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new Fullbright());
         MinecraftForge.EVENT_BUS.register(new NoDamageTilt());
         MinecraftForge.EVENT_BUS.register(new ClearChat());
-
-        if (ModConfig.fullbrightEnabled) {
-            Minecraft.getMinecraft().gameSettings.gammaSetting = 100.0f;
-        }
     }
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (openMenuKey.isPressed()) {
-            Minecraft.getMinecraft().displayGuiScreen(new ModGui());
+            Minecraft.getMinecraft().displayGuiScreen(new LunarGui());
         }
-    }
-
-    public static void toggleFullbright() {
-        Minecraft mc = Minecraft.getMinecraft();
-        ModConfig.fullbrightEnabled = !ModConfig.fullbrightEnabled;
-
-        if (ModConfig.fullbrightEnabled) {
-            mc.gameSettings.gammaSetting = 100.0f;
-        } else {
-            mc.gameSettings.gammaSetting = 1.0f;
-        }
-        ModConfig.saveConfig();
     }
 }
